@@ -15,7 +15,11 @@ const UserSchema = new mongoose.Schema({
     role: {
         type: String,
         enum: ['admin', 'normal']
-    }
+    },
+    // contacts: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'User'
+    // }]
 })
 
 module.exports = mongoose.model('Users', UserSchema)

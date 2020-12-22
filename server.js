@@ -42,5 +42,5 @@ app.use(passport.session())
 app.use('/auth', AuthRouter)
 
 app.listen(3001, () => {
-    console.log('App is listening');
+    console.log('Auth server is listening on port '+ 3001 );
 })
