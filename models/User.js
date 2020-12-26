@@ -16,10 +16,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         enum: ['admin', 'normal']
     },
-    // contacts: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User'
-    // }]
+    contacts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Users'
+    }]
 })
 
 module.exports = mongoose.model('Users', UserSchema)

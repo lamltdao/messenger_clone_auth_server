@@ -1,6 +1,5 @@
 const express = require('express')
 const router = express.Router()
-const {checkAuthenticated, checkNotAuthenticated} = require('../middlewares/checkAuth')
 const AuthController = require('../controllers/AuthController')
 const passport = require('passport')
 

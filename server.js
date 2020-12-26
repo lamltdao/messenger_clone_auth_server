@@ -15,7 +15,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 // folders
 const AuthRouter = require('./routes/AuthRoute')
-
+const UserRouter = require('./routes/UserRoute')
 app.use(cors())
 app.use(express.urlencoded({extended: false})) // access form by name attribute in tag
 app.use(flash())
@@ -40,6 +40,7 @@ app.use(passport.session())
 
 // Routes
 app.use('/auth', AuthRouter)
+app.use('/user', UserRouter)
 
 app.listen(3001, () => {
     console.log('Auth server is listening on port '+ 3001 );

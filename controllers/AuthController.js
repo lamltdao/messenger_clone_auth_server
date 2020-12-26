@@ -3,15 +3,16 @@ const User = require('../models/User')
 const RefreshToken = require('../models/RefreshToken')
 const jwt = require('jsonwebtoken')
 
-const jwtExpiredIn = '1h'
+const jwtExpiredIn = 60*60
 
 module.exports = {
     login: async(req, res) => {
         try {   
             const {id, role} = req.user
             // sign jwt
-            const accessToken = jwt.sign({userId: id, role}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: jwtExpiredIn})
-            const refreshToken = jwt.sign({userId: id, role}, process.env.REFRESH_TOKEN_SECRET)
+            const jwtBody = {userId: id, role}
+            const accessToken = jwt.sign(jwtBody, process.env.ACCESS_TOKEN_SECRET, {expiresIn: jwtExpiredIn})
+            const refreshToken = jwt.sign(jwtBody, process.env.REFRESH_TOKEN_SECRET)
             // Store refreshToken in db
             let token = new RefreshToken({refreshToken})
             await token.save()
@@ -64,6 +65,7 @@ module.exports = {
             jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err,payload) => {
                 if(err) return res.sendStatus(403)
                 // if yes, then generate new access token
+                payload.iat = Date.now()
                 const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {expiresIn: jwtExpiredIn})
                 return res.json({accessToken})
             })        
