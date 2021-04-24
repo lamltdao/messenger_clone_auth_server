@@ -4,7 +4,7 @@ module.exports = {
     getUserByJwt: async (req,res) => {
         try {
             const {userId} = req.payload
-            const user = await User.findById(userId).select('_id name email')
+            const user = await User.findById(userId).select('_id name email contacts').populate('contacts', '_id name email')
             if(user == null) return res.status(404).json("User not found")
             return res.status(200).json(user)
         }
@@ -18,7 +18,7 @@ module.exports = {
             const {userId} = req.payload
 
             // return _id, email, name only in populated field 
-            const user = await User.findById(userId).populate('contacts', 'email _id name')
+            const user = await User.findById(userId).populate('contacts', '_id name email')
             if(user == null) return res.status(404).json("User not found")
             const {contacts} = user
             return res.status(200).json(contacts)

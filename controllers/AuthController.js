@@ -25,13 +25,16 @@ module.exports = {
     register: async (req,res) => {
         try {            
             const {name, email, password} = req.body
+            const existingUser = await User.find({email})
+            if(existingUser.length > 0) return res.status(409).json('Email already used')
             const hashPassword = await bcrypt.hash(password, 10)         
             const user = new User({name, email, password: hashPassword, role:'normal'})
             await user.save()
             return res.status(200).json({message: 'Successfully register'})
         }
         catch(err) {
-            return res.sendStatus(500)
+            console.log(err);
+            return res.status(500).json('Internal error')
         }   
     },
     logOut: async(req,res) => {
