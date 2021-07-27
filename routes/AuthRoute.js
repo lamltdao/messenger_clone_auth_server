@@ -11,7 +11,6 @@ router.post(
   passport.authenticate("local", {
     // successRedirect: '/',
     // failureRedirect: '/login',
-    //failureFlash: true
     failureFlash: "Invalid username or password",
   }),
   AuthController.login
