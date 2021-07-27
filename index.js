@@ -12,23 +12,31 @@ const session = require("express-session");
 const passportConfig = require("./configs/passport-config");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const MongoStore = require("connect-mongo");
+
 // folders
 const AuthRouter = require("./routes/AuthRoute");
 const UserRouter = require("./routes/UserRoute");
 
 app.set("trust proxy", true);
 app.use(cors());
+app.use(express.json());
 app.use(express.urlencoded({ extended: false })); // access form by name attribute in tag
-app.use(flash());
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      secure: false,
+      signed: false,
+    },
+    store: MongoStore.create({
+      mongoUrl: `${process.env.SESSION_DATABASE_URL}`,
+    }),
   })
 );
-app.use(express.urlencoded({ limit: "10mb", extended: false })); // so that data form appear in req.body
-app.use(express.json());
+app.use(flash());
 
 // db
 mongoose.connect(process.env.DATABASE_URL, {

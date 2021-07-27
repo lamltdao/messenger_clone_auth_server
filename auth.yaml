@@ -3,3 +3,6 @@ service: auth
 env_variables:
   SESSION_SECRET: "session-secret"
   DATABASE_URL: "mongodb+srv://user:dbUserPassword@main.us7x1.mongodb.net/auth?retryWrites=true&w=majority"
+  ACCESS_TOKEN_SECRET: "ACCESS_TOKEN_SECRET"
+  REFRESH_TOKEN_SECRET: "REFRESH_TOKEN_SECRET"
+  SESSION_DATABASE_URL: "mongodb+srv://user:dbUserPassword@main.us7x1.mongodb.net/session?retryWrites=true&w=majority"
