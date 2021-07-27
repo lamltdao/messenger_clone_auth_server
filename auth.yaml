@@ -1,0 +1,5 @@
+runtime: nodejs14
+service: auth
+env_variables:
+  SESSION_SECRET: "session-secret"
+  DATABASE_URL: "mongodb+srv://user:dbUserPassword@main.us7x1.mongodb.net/auth?retryWrites=true&w=majority"
